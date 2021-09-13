@@ -1,5 +1,8 @@
-const products = require("../db/contacts.json");
+const contacts = require("../db/contacts.json");
 
-const listContacts = async () => products;
+const listContacts = async () => {
+    console.table(contacts);
+    return contacts;
+};
 
 module.exports = listContacts;

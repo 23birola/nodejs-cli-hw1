@@ -1,12 +1,15 @@
-const listContacts = require("./listContacts");
+const getContacts = require("./getContacts");
+// const contacts = require("../db/contacts.json");
 
 const getContactById = async (id) => {
-    const products = await listContacts();
-    const product = products.find(item => item.id === id);
-    if (!product) {
+    const contacts = await getContacts();
+    const contact = contacts.find(item => String(item.id) === String(id));
+    if (!contact) {
+        console.log(null);
         return null;
     }
-    return product;
+    console.log(contact);
+    return contact;
 }
 
 module.exports = getContactById;

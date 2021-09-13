@@ -1,45 +1,37 @@
-const fs = require("fs");
-const path = require("path");
+// const fs = require("fs");
+// const path = require("path");
 const contactsOperations = require("./TODO");
 
-// const contactsPath = path.join(__dirname, "products.json");
+const { Command } = require('commander');
+const program = new Command();
+program
+    .option('-a, --action <type>', 'choose action')
+    .option('-i, --id <type>', 'user id')
+    .option('-n, --name <type>', 'user name')
+    .option('-e, --email <type>', 'user email')
+    .option('-p, --phone <type>', 'user phone');
 
-const workWithContacts = async (type = "listContacts", id, data) => {
-    try {
-        switch (type) {
-            case "listContacts":
-                return await contactsOperations.listContacts();
-            case "getContactById":
-                return await contactsOperations.getContactById(id);
-            case "addContact":
-                return await contactsOperations.addContact(data);
-            case "removeContact":
-                return await contactsOperations.removeContact(id);
-        }
-    }
-    catch (error) {
-        throw error;
+program.parse(process.argv);
+
+const argv = program.opts();
+
+function invokeAction({ action, id, name, email, phone }) {
+    switch (action) {
+        case "list":
+            contactsOperations.listContacts();
+            break;
+        case "get":
+            contactsOperations.getContactById(id);
+            break;
+        case "add":
+            contactsOperations.addContact(name, email, phone);
+            break;
+        case "remove":
+            contactsOperations.removeContact(id);
+            break;
+        default:
+            console.warn('\x1B[31m Unknown action type!');
     }
 };
 
-// workWithContacts("listContacts")
-//     .then(data => console.log(data))
-//     .catch(error => console.log(error));
-
-
-
-// const id = 10;
-
-// workWithContacts("getContactById", id)
-//     .then(data => console.log(data))
-//     .catch(error => console.log(error));
-
-const newContact = {
-    name: "Ivan",
-    email: "ivan@ukr.net",
-    phone: "(050) 201-1111"
-};
-
-workWithContacts("addContact", "", newContact)
-    .then(data => console.log(data))
-    .catch(error => console.log(error));
+invokeAction(argv);
