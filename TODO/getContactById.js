@@ -1,5 +1,4 @@
 const getContacts = require("./getContacts");
-// const contacts = require("../db/contacts.json");
 
 const getContactById = async (id) => {
     const contacts = await getContacts();

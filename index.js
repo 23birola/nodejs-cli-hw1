@@ -1,5 +1,3 @@
-// const fs = require("fs");
-// const path = require("path");
 const contactsOperations = require("./TODO");
 
 const { Command } = require('commander');
